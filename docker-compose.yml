@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./rdbms:/rdbms
+      - ./rdbms/import_movies.sh:/docker-entrypoint-initdb.d/import_movies.sh
+    ports:
+      - 5432:5432
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+
+  mongo_data:
+    image: mongo:latest
+    links:
+      - mongodb
+    volumes:
+      - ./mongo:/mongo
+    command:
+      bash -c "./mongo/import_credits.sh"
+
+  drill:
+    image: apache/drill:latest
+    user: "root:root"
+    volumes:
+      - ./drill/client-jars:/client-jars
+    ports:
+      - '8047:8047'
+    command: /bin/bash -c "cp /client-jars/postgresql-42.6.0.jar /opt/drill/jars/3rdparty && cp /client-jars/mongodb-driver-3.12.14.jar /opt/drill/jars/3rdparty"
+    stdin_open: true
+
+networks:
+    default:                                                            # App-wide default network
+        name: ds2dcgen_default
+        driver: bridge
+        driver_opts:
+            encrypted: ""     

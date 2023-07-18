@@ -1,6 +1,6 @@
-## Linux users, just execute the shell script "drill/setup_drill.sh" 
+# Linux users, just execute the shell script "drill/setup_drill.sh" 
 
-## Windows users, follow the below manual steps to complete the Docker setup
+# Windows users, follow the below manual steps to complete the Docker setup
 
 1. Run the following docker command from the "summerschool" folder where there is docker-compose.yml file.
 
@@ -31,11 +31,12 @@ docker restart <CONTAINER_ID>
 
 6. Go to the "Storage" tab and enable both "mongo" and "rdbms" storage plugins
 
-7. Update the "mongo" plugin with the following. You can find the container IP address using "docker inspect <CONTAINER_ID>
+7. Update the "mongo" plugin with the following. You can find the container IP address using "docker inspect <CONTAINER_ID>"
 
+```
 {
   "type": "mongo",
-  "connection": "mongodb://<Mongo Container IP Address>:27017/",
+  "connection": "mongodb:// (Mongo Container IP Address) :27017/",
   "pluginOptimizations": {
     "supportsProjectPushdown": true,
     "supportsFilterPushdown": true,
@@ -48,14 +49,17 @@ docker restart <CONTAINER_ID>
   "enabled": true,
   "authMode": "SHARED_USER"
 }
+```
 
 8. Update the "rdbms" plugin with the following.
 
+```
 {
   "type": "jdbc",
   "enabled": "true",
   "driver": "org.postgresql.Driver",
-  "url": "jdbc:postgresql://<Postgres Container IP address>:5432/",
+  "url": "jdbc:postgresql:// (Postgres Container IP address) :5432/",
   "username": "postgres",
   "password": "postgres"
 }
+```

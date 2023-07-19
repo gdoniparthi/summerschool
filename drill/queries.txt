@@ -1,0 +1,28 @@
+#1. top 10 action movies by revenue
+
+select m.title, m.revenue from rdbms.`movies` as m, rdbms.`genres` as g where g.movie_id = m.id and (g.genre = 'Action' or g.genre = 'Adventure') order by m.revenue desc limit 10;
+
+#2. top keywords associated with the movies
+
+select keyword, count(1) as keyword_count from rdbms.`keywords` group by keyword order by keyword_count desc;
+
+
+#3. movies with the keywords "horse"
+
+select m.title, m.id from rdbms.`movies` as m, rdbms.`keywords` as k where k.movie_id = m.id and k.keyword like '%horse%';
+
+
+#4. actors who acted in most number of characters.
+
+select c.name, count(1) as number_movies from mongo.movies.`casting` as c group by c.name order by number_movies desc limit 20; 
+
+
+#5. actors who also contributeed to the same movie in a technical department
+
+select c.name, c.order_id, s.job, s.department from mongo.movies.`casting` as c, mongo.movies.`crew` as s where c.movie_id = s.movie_id and s.name = c.name order by c.order_id limit 20; 
+
+
+#6. actors who played lead role in a movie and also contributed technically in a department
+
+select c.name, c.order_id, s.job, s.department, m.title from mongo.movies.`casting` as c, mongo.movies.`crew` as s, rdbms.`movies` as m where c.movie_id = s.movie_id and m.id = c.movie_id and m.id 
+= s.movie_id and s.name = c.name order by c.order_id limit 20; 

@@ -1,13 +1,13 @@
 #! /bin/bash
 
-CONTAINER=`echo -n ${TOKEN} | docker ps -aqf "name=summerschooldb-drill-1"`
+CONTAINER=`echo -n ${TOKEN} | docker ps -aqf "name=summerschool-drill-1"`
 echo "Drill container id is ${CONTAINER}"
 echo "Copying client-jars to the drill container"
 for f in client-jars/*.jar; do docker cp $f ${CONTAINER}:/opt/drill/jars/3rdparty; done
 echo "Restarting the drill container"
 docker restart ${CONTAINER}
 
-RDBMS=`echo -n ${TOKEN} | docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' summerschooldb-postgres-1`
+RDBMS=`echo -n ${TOKEN} | docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' summerschool-postgres-1`
 echo "RDBMS-Storage Plugin Connection String"
 echo "{
   \"type\": \"jdbc\",
@@ -18,7 +18,7 @@ echo "{
   \"password\": \"postgres\"
 }"
 
-MONGO=`echo -n ${TOKEN} | docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' summerschooldb-mongodb-1`
+MONGO=`echo -n ${TOKEN} | docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' summerschool-mongodb-1`
 echo ""
 echo "MONGO-Storage Plugin Connection String"
 echo "{

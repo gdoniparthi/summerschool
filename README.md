@@ -1,4 +1,4 @@
-Follow the below manual steps to complete the Docker setup
+Clone the repo and follow the below manual steps to complete the setup
 
 1. Run the following docker command from the "summerschool" folder where there is docker-compose.yml file.
 

@@ -75,12 +75,12 @@ docker inspect <CONTAINER_ID>
 9. On the Drill UI, go to the Queries tab and execute the following test query.
 
 ```
-select title, plot from rdbms.`movies` where id=19995;
+select title, overview from rdbms.`movies` where title='Seabiscuit';
 ```
 
 10. Try the below Mongo test query. Yes, it is an SQL query!
 
 ```
-select job, name from mongo.movies.`crew` where movie_id=19995;
+select character_name, name, order_id from mongo.movies.`casting` where movie_id=4464 order by order_id;
 ``` 
 
